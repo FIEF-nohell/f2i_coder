@@ -42,9 +42,10 @@ height = root
 # create the image, display it and save it
 image_data = []
 counter = 1
+total = root*root
 for i in range(len(bit_string)):
     if i % root == 0: 
-        print("row done: " + str(counter) + "/" + str(root) )
+        print("row done: " + str(counter) + "/" + str(root) + " | " + str(root*counter) + "/" + str(total)+ " pixels")
         counter += 1
     if bit_string[i] == "0":
         image_data.append((0, 0, 0))  # black pixel
@@ -52,7 +53,7 @@ for i in range(len(bit_string)):
         image_data.append((255, 255, 255))  # white pixel
 
 # add a red pixel at the end of the image to indicate the end of the bit string
-image_data.append((100, 142, 169))
+image_data.append((169, 00, 00))
 
 image = Image.new("RGB", (width, height))
 image.putdata(image_data)
