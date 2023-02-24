@@ -3,9 +3,11 @@ import bitstring
 import math
 import os
 
-filename = "input.mp4"
+filename = "alla.docx"
 filetype = os.path.splitext(filename)[1]
 output_filename = "./output/" + f"output{filetype}"
+
+pixel_color_multiplier = 255
 
 with open(filename, "rb") as file:
     binary_data = file.read()
@@ -29,10 +31,10 @@ for i in range(len(bitstring)):
     if bitstring[i] == "0":
         image_data.append((0, 0, 0))  # black pixel
     else:
-        image_data.append((255, 255, 255))  # white pixel
+        image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
 
-# add a red pixel at the end of the image to indicate the end of the bit string
-image_data.append((169, 00, 00))
+# add a different pixel at the end of the image to indicate the end of the bit string
+image_data.append((1*pixel_color_multiplier, 0, 0))
 
 extension_bitstring = ''.join(format(ord(c), '08b') for c in filetype)
 
@@ -43,10 +45,10 @@ for i in range(len(extension_bitstring)):
     if extension_bitstring[i] == "0":
         image_data.append((0, 0, 0))  # black pixel
     else:
-        image_data.append((255, 255, 255))  # white pixel
+        image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
 
-# add a red pixel at the end of the image to indicate the end of the bit string
-image_data.append((169, 00, 00))
+# add a different pixel at the end of the image to indicate the end of the bit string
+image_data.append((1*pixel_color_multiplier, 00, 00))
 
 image = Image.new("RGB", (width, height))
 image.putdata(image_data)
