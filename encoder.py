@@ -3,7 +3,7 @@ import bitstring
 import math
 import os
 
-filename = "image.png"
+filename = "alla.docx"
 filetype = os.path.splitext(filename)[1]
 output_filename = "./output/" + f"output{filetype}"
 
@@ -11,7 +11,6 @@ with open(filename, "rb") as file:
     binary_data = file.read()
 
 bitstring = bitstring.BitArray(filename=filename).bin
-print(bitstring)
 
 with open(output_filename, "wb") as file:
     file.write(binary_data)
@@ -19,7 +18,7 @@ with open(output_filename, "wb") as file:
 # calculate the image dimensions
 root = math.ceil(math.sqrt(len(bitstring)))
 width = root 
-height = root
+height = root+1
 # ---------------------------------------
 
 # create the image, display it and save it
@@ -39,7 +38,6 @@ for i in range(len(bitstring)):
 image_data.append((169, 00, 00))
 
 extension_bitstring = ''.join(format(ord(c), '08b') for c in filetype)
-print("ext: " + str(extension_bitstring))
 
 for i in range(len(extension_bitstring)):
     if i % root == 0: 
@@ -55,6 +53,6 @@ image_data.append((169, 00, 00))
 
 image = Image.new("RGB", (width, height))
 image.putdata(image_data)
-image.save("./output/image.png")
+image.save("./output/output.png")
 image.show()
 # ---------------------------------------
