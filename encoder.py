@@ -6,19 +6,21 @@ import os
 
 
 
-def file_to_bitstring(filename):
+def file_to_bitstring(filename, buffer_size=1024):
     with open(filename, "rb") as file:
-        byte = file.read(1)
         bit_string = ""
-        while byte:
-            bits = bin(byte[0])[2:].rjust(8, "0")
-            bit_string += bits
-            byte = file.read(1)
+        while True:
+            buffer = file.read(buffer_size)
+            if not buffer:
+                break
+            for byte in buffer:
+                bits = bin(byte)[2:].rjust(8, "0")
+                bit_string += bits
     return bit_string
 
 
 # Define input file and output folder
-input_filename = "elo.txt"
+input_filename = "pp.txt"
 output_folder = "./output"
 
 # Read file and convert to bit string
@@ -39,7 +41,11 @@ height = root
 
 # create the image, display it and save it
 image_data = []
+counter = 1
 for i in range(len(bit_string)):
+    if i % root == 0: 
+        print("row done: " + str(counter) + "/" + str(root) )
+        counter += 1
     if bit_string[i] == "0":
         image_data.append((0, 0, 0))  # black pixel
     else:
