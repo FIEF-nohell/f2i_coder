@@ -1,6 +1,10 @@
+# Imports
 from PIL import Image
 import math
 import os
+# ---------------------------------------
+
+
 
 def file_to_bitstring(filename):
     with open(filename, "rb") as file:
@@ -12,10 +16,12 @@ def file_to_bitstring(filename):
             byte = file.read(1)
     return bit_string
 
-# Read file and convert to bit string
 
+# Define input file and output folder
 input_filename = "elo.txt"
 output_folder = "./output"
+
+# Read file and convert to bit string
 bit_string = file_to_bitstring(input_filename)
 bitstring_filename = os.path.join(output_folder, "bits.txt")
 
@@ -23,15 +29,15 @@ bitstring_filename = os.path.join(output_folder, "bits.txt")
 with open(bitstring_filename, "w") as file:
     file.write(bit_string)
 
-# Read bit string from file and rebuild original file
-with open(bitstring_filename, "r") as file:
-    bit_string = file.read()
-
+# calculate the image dimensions
 root = math.ceil(math.sqrt(len(bit_string)))
-
 width = root 
 height = root
+# ---------------------------------------
 
+
+
+# create the image, display it and save it
 image_data = []
 for i in range(len(bit_string)):
     if bit_string[i] == "0":
@@ -42,6 +48,8 @@ for i in range(len(bit_string)):
 # add a red pixel at the end of the image to indicate the end of the bit string
 image_data.append((255, 0, 0))
 
-image = Image.new("RGB", (width, height))  # increase the height by 1 for the red pixel
+image = Image.new("RGB", (width, height))
 image.putdata(image_data)
+image.save("./output/image.png")
 image.show()
+# ---------------------------------------
