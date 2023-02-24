@@ -46,7 +46,7 @@ for i in range(len(bit_string)):
         image_data.append((255, 255, 255))  # white pixel
 
 # add a red pixel at the end of the image to indicate the end of the bit string
-image_data.append((255, 0, 0))
+image_data.append((100, 142, 169))
 
 image = Image.new("RGB", (width, height))
 image.putdata(image_data)
