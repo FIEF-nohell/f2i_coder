@@ -5,12 +5,12 @@ import math
 import sys
 import os
 
-
 # get the file information 
 input_folder = "./input/"
 output_folder = "./encoded/"
-filename = "ses.rar"
+filename = os.listdir('./input/')[0]
 filetype = os.path.splitext(filename)[1]
+
  
 # multiplier for the color brightness
 pixel_color_multiplier = 255
