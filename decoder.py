@@ -19,19 +19,23 @@ print("image dimensions: " + str(image_dimensions) + "x" + str(image_dimensions)
 # iterate over each pixel and read its binary data
 separator_counter = 0
 binary_data = bytearray()
-binary_data = bytearray()
+binary_data_ext = bytearray()
 for x in range(image_dimensions):
     for y in range(image_dimensions):
         if pix[x,y][0] == 169:
             separator_counter += 1
-            binary_data.append(0)
+            if separator_counter == 2: break
 
         if pix[x,y][0] == 0:
             if separator_counter == 0: binary_data.append(0)
-            if separator_counter == 1: binary_data.append(0)
+            if separator_counter == 1: binary_data_ext.append(0)
         if pix[x,y][0] == 255:
-            binary_data.append(1)
+            if separator_counter == 0: binary_data.append(0)
+            if separator_counter == 1: binary_data_ext.append(0)
+    if separator_counter == 2: break
 
+print(binary_data)
+print(binary_data_ext)
 """
 with open("decoded" + chr(int(current_string[1][:8], 2)), "wb") as file:
     file.write(current_string[0])  """
