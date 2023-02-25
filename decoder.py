@@ -14,10 +14,12 @@ image_dimensions = image.size[0]
 colorset = [255, 169, 0]
 print("image dimensions: " + str(image_dimensions) + "x" + str(image_dimensions))  # Get the width and hight of the image for iterating over
 
-for x in range(image_dimensions):
+bitstring = bs.BitArray(filename=input_folder + filename).bin
+print(bitstring)
+
+""" for x in range(image_dimensions):
     for y in range(image_dimensions):
 
 
-
-""" with open("decoded" + chr(int(current_string[1][:8], 2)), "wb") as file:
-    file.write(current_string[0]) """
+with open("decoded" + chr(int(current_string[1][:8], 2)), "wb") as file:
+    file.write(current_string[0])  """

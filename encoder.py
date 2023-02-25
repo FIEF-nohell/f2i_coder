@@ -7,7 +7,7 @@ import os
 # get the file information 
 input_folder = "./input/"
 output_folder = "./encoded/"
-filename = "fief.txt"
+filename = "ses.rar"
 filetype = os.path.splitext(filename)[1]
  
 # multiplier for the color brightness
