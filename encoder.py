@@ -8,7 +8,7 @@ import os
 # get the file information 
 input_folder = "./input/"
 output_folder = "./encoded/"
-filename = os.listdir('./input/')[0]
+filename = os.listdir(input_folder)[0]
 filetype = os.path.splitext(filename)[1]
 
  
