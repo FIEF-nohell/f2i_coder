@@ -3,10 +3,12 @@ import bitstring
 import math
 import os
 
-filename = "alla.png"
-output_filename = "./output/" + f"output{filetype}"
+# get the file information 
+input_folder = "./encoded/"
+output_folder = "./decoded/"
+filename = "encoded.png"
 
-with open(filename, "rb") as file:
+with open(input_folder + filename, "rb") as file:
     binary_data = file.read()
 
 bitstring = bitstring.BitArray(filename=filename).bin

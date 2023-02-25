@@ -1,24 +1,24 @@
+# imports
 from PIL import Image
 import bitstring
 import math
 import os
 
+# get the file information 
+input_folder = "./input/"
+output_folder = "./encoded/"
 filename = "alla.docx"
 filetype = os.path.splitext(filename)[1]
-output_filename = "./output/" + f"output{filetype}"
-
+ 
+# multiplier for the color brightness
 pixel_color_multiplier = 255
 
-with open(filename, "rb") as file:
-    binary_data = file.read()
-
-bitstring = bitstring.BitArray(filename=filename).bin
+bitstring = bitstring.BitArray(filename=input_folder + filename).bin
 
 # calculate the image dimensions
 root = math.ceil(math.sqrt(len(bitstring)))
 width = root 
 height = root+1
-# ---------------------------------------
 
 # create the image, display it and save it
 image_data = []
@@ -52,6 +52,5 @@ image_data.append((1*pixel_color_multiplier, 00, 00))
 
 image = Image.new("RGB", (width, height))
 image.putdata(image_data)
-image.save("./output/output.png")
+image.save(output_folder + "encoded.png")
 image.show()
-# ---------------------------------------
