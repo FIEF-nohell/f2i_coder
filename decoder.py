@@ -1,18 +1,23 @@
 from PIL import Image
-import bitstring
+import bitstring as bs
 import math
-import os
 
 # get the file information 
 input_folder = "./encoded/"
 output_folder = "./decoded/"
 filename = "encoded.png"
 
-with open(input_folder + filename, "rb") as file:
-    binary_data = file.read()
+# load the image and get the pixels
+image = Image.open(input_folder + filename)
+pix = image.load()
+image_dimensions = image.size[0]
+colorset = [255, 169, 0]
+print("image dimensions: " + str(image_dimensions) + "x" + str(image_dimensions))  # Get the width and hight of the image for iterating over
 
-bitstring = bitstring.BitArray(filename=filename).bin
+for x in range(image_dimensions):
+    for y in range(image_dimensions):
 
-with open(output_filename, "wb") as file:
-    file.write(binary_data)
 
+
+""" with open("decoded" + chr(int(current_string[1][:8], 2)), "wb") as file:
+    file.write(current_string[0]) """
