@@ -2,7 +2,9 @@
 from PIL import Image
 import bitstring
 import math
+import sys
 import os
+
 
 # get the file information 
 input_folder = "./input/"
@@ -25,9 +27,10 @@ height = root
 image_data = []
 counter = 1
 total = root*root
+print("\n\nPrinting " + str(root) + "x" + str(root) + " grid | " + str(total)+ " pixels total\n")
 for i in range(len(bitstring)):
     if i % root == 0: 
-        print("row done: " + str(counter) + "/" + str(root) + " | " + str(root*counter) + "/" + str(total)+ " pixels")
+        print(" printing " + str(((counter/(root+1)))*100)[:5] + "% done", end='\r')
         counter += 1
     if bitstring[i] == "0":
         image_data.append((0, 0, 0))  # black pixel
@@ -38,13 +41,12 @@ for i in range(len(bitstring)):
 image_data.append((169, 0, 0))
 
 for i in range(len(extension_bitstring)):
-    if i % root == 0: 
-        print("row done: " + str(counter) + "/" + str(root) + " | " + str(root*counter) + "/" + str(total)+ " pixels")
-        counter += 1
     if extension_bitstring[i] == "0":
         image_data.append((0, 0, 0))  # black pixel
     else:
         image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
+
+print("Creating image file...")
 
 # add a different pixel at the end of the image to indicate the end of the bit string
 image_data.append((169, 00, 00))
@@ -53,3 +55,5 @@ image = Image.new("RGB", (width, height))
 image.putdata(image_data)
 image.save(output_folder + "encoded.png")
 #image.show()
+
+print("Image file created!")
