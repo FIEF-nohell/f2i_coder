@@ -15,6 +15,7 @@ pix = image.load()
 image_dimensions = image.size[0]
 colorset = [255, 169, 0]
 print("image dimensions: " + str(image_dimensions) + "x" + str(image_dimensions))  # Get the width and hight of the image for iterating over
+print("reading file...")
 
 # iterate over each pixel and read its binary data
 separator_counter = 0
