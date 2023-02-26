@@ -33,12 +33,15 @@ for y in range(image_dimensions):
             elif separator_counter == 1: binary_data_ext += "1"
     if separator_counter == 2: break
 
-n = int(binary_data, 2)
 
+binary_data_bits = int(binary_data, 2)
+binary_data_ext_bits = int(binary_data_ext, 2)
 # convert the integer into a byte-like object
-byte_string = n.to_bytes((n.bit_length() + 7) // 8, 'big')
+byte_string = binary_data_bits.to_bytes((binary_data_bits.bit_length() + 7) // 8, 'big')
+byte_string_ext = binary_data_ext_bits.to_bytes((binary_data_ext_bits.bit_length() + 7) // 8, 'big')
+byte_string_ext.decode("utf-8")
     
-with open(output_folder + "decoded.txt", "wb") as file:
+with open(output_folder + "decoded"+byte_string_ext.decode("utf-8"), "wb") as file:
     file.write(byte_string) 
 
 print("Done!")
