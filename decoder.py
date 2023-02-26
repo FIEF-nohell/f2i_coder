@@ -34,13 +34,25 @@ for y in range(image_dimensions):
     if separator_counter == 2: break
 
 
-print(binary_data[:40])
-binary_data_bits = int(binary_data, 2)
 binary_data_ext_bits = int(binary_data_ext, 2)
+
 # convert the integer into a byte-like object
-byte_string = binary_data_bits.to_bytes((binary_data_bits.bit_length() + 7) // 8, 'big')
 byte_string_ext = binary_data_ext_bits.to_bytes((binary_data_ext_bits.bit_length() + 7) // 8, 'big')
-    
+
+binary_data_bits = int(binary_data, 2)
+
+# determine the number of bytes needed to represent the integer
+num_bytes = (binary_data_bits.bit_length() + 7) // 8
+
+# add a leading zero byte if the integer requires an even number of bytes
+if num_bytes % 2 == 1:
+    num_bytes += 1
+
+# convert the integer into a byte-like object, preserving leading zero bytes
+byte_string = binary_data_bits.to_bytes(num_bytes, 'big')
+
+print(byte_string)
+
 with open(output_folder + "decoded"+byte_string_ext.decode("utf-8"), "wb") as file:
     file.write(byte_string) 
 
