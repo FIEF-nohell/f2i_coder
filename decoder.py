@@ -34,6 +34,7 @@ for y in range(image_dimensions):
     if separator_counter == 2: break
 
 
+print(binary_data[:40])
 binary_data_bits = int(binary_data, 2)
 binary_data_ext_bits = int(binary_data_ext, 2)
 # convert the integer into a byte-like object
