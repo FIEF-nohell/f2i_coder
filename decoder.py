@@ -1,5 +1,6 @@
 from PIL import Image
 import bitstring as bs
+import time
 import math
 import os
 
@@ -7,7 +8,6 @@ import os
 input_folder = "./encoded/"
 output_folder = "./decoded/"
 filename = os.listdir(input_folder)[0]
-print(os.listdir(input_folder))
 
 # load the image and get the pixels
 image = Image.open(input_folder + filename)
@@ -18,24 +18,27 @@ print("image dimensions: " + str(image_dimensions) + "x" + str(image_dimensions)
 
 # iterate over each pixel and read its binary data
 separator_counter = 0
-binary_data = bytearray()
-binary_data_ext = bytearray()
-for x in range(image_dimensions):
-    for y in range(image_dimensions):
+binary_data = bs.BitArray().bin
+binary_data_ext = bs.BitArray().bin
+for y in range(image_dimensions):
+    for x in range(image_dimensions):
         if pix[x,y][0] == 169:
             separator_counter += 1
             if separator_counter == 2: break
-
         if pix[x,y][0] == 0:
-            if separator_counter == 0: binary_data.append(0)
-            if separator_counter == 1: binary_data_ext.append(0)
+            if separator_counter == 0: binary_data += "0"
+            elif separator_counter == 1: binary_data_ext += "0"
         if pix[x,y][0] == 255:
-            if separator_counter == 0: binary_data.append(0)
-            if separator_counter == 1: binary_data_ext.append(0)
+            if separator_counter == 0: binary_data += "1"
+            elif separator_counter == 1: binary_data_ext += "1"
     if separator_counter == 2: break
 
-print(binary_data)
-print(binary_data_ext)
-"""
-with open("decoded" + chr(int(current_string[1][:8], 2)), "wb") as file:
-    file.write(current_string[0])  """
+n = int(binary_data, 2)
+
+# convert the integer into a byte-like object
+byte_string = n.to_bytes((n.bit_length() + 7) // 8, 'big')
+    
+with open(output_folder + "decoded.txt", "wb") as file:
+    file.write(byte_string) 
+
+print("Done!")
