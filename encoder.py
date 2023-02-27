@@ -1,6 +1,7 @@
 # imports
 from PIL import Image
 import bitstring
+import time
 import math
 import sys
 import os
@@ -27,6 +28,7 @@ height = root
 image_data = []
 counter = 1
 total = root*root
+t1 = time.time()
 print("\n\nPrinting " + str(root) + "x" + str(root) + " grid | " + str(total)+ " pixels total\n")
 for i in range(len(bitstring)):
     if i % root == 0: 
@@ -36,6 +38,8 @@ for i in range(len(bitstring)):
         image_data.append((0, 0, 0))  # black pixel
     else:
         image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
+t2 = time.time() - t1
+print(f"Image printing took {t2} seconds\n")
 
 # add a different pixel at the end of the image to indicate the end of the bit string
 image_data.append((169, 0, 0))
@@ -47,6 +51,7 @@ for i in range(len(extension_bitstring)):
         image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
 
 print("Creating image file...")
+t1 = time.time()
 
 # add a different pixel at the end of the image to indicate the end of the bit string
 image_data.append((169, 00, 00))
@@ -55,5 +60,5 @@ image = Image.new("RGB", (width, height))
 image.putdata(image_data)
 image.save(output_folder + "encoded.png")
 #image.show()
-
-print("Image file created!")
+t2 = time.time() - t1
+print(f"Image file created in {t2} seconds")

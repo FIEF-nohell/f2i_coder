@@ -21,7 +21,9 @@ print("reading file...")
 separator_counter = 0
 binary_data = bs.BitArray().bin
 binary_data_ext = bs.BitArray().bin
+t1 = time.time()
 for y in range(image_dimensions):
+    print(" reading " + str(((y/(image_dimensions)))*100)[:5] + "% done", end='\r')
     for x in range(image_dimensions):
         if pix[x,y][0] == 169:
             separator_counter += 1
@@ -33,8 +35,10 @@ for y in range(image_dimensions):
             if separator_counter == 0: binary_data += "1"
             elif separator_counter == 1: binary_data_ext += "1"
     if separator_counter == 2: break
+t2 = time.time() - t1
+print(f"file read in {t2} seconds, converting into bytes...")
 
-
+print(str(binary_data)[0:20])
 binary_data_ext_bits = int(binary_data_ext, 2)
 
 # convert the integer into a byte-like object
@@ -45,14 +49,13 @@ binary_data_bits = int(binary_data, 2)
 # determine the number of bytes needed to represent the integer
 num_bytes = (binary_data_bits.bit_length() + 7) // 8
 
+
 # add a leading zero byte if the integer requires an even number of bytes
 if num_bytes % 2 == 1:
     num_bytes += 1
 
 # convert the integer into a byte-like object, preserving leading zero bytes
 byte_string = binary_data_bits.to_bytes(num_bytes, 'big')
-
-print(byte_string)
 
 with open(output_folder + "decoded"+byte_string_ext.decode("utf-8"), "wb") as file:
     file.write(byte_string) 
