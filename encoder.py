@@ -30,16 +30,25 @@ counter = 1
 total = root*root
 t1 = time.time()
 print("\n\n---- Printing " + str(root) + "x" + str(root) + " grid | " + str(total)+ " pixels total ----\n")
-for i in range(len(bitstring)):
-    if i % root == 0: 
-        print(" printing " + str(((counter/(root+1)))*100)[:5] + "% done", end='\r')
-        counter += 1
+
+start_time = time.time()  # record the start time
+num_iterations = len(bitstring)
+
+for i in range(num_iterations):
+    if i % root == 0 and i != 0: 
+        elapsed_time = time.time() - start_time
+        remaining_time = 0
+        pixels_per_second = 0
+        if elapsed_time > 0:
+            remaining_time = elapsed_time * (num_iterations - i) / i
+            pixels_per_second = i / elapsed_time
+        print(f"printing {((i / num_iterations) * 100):.2f}% done | about {remaining_time:.2f} seconds remaining | {pixels_per_second:.2f} pixels/second", end='\r')
     if bitstring[i] == "0":
         image_data.append((0, 0, 0))  # black pixel
     else:
         image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
 t2 = round(time.time() - t1,2)
-print(f"Image printing took {t2} seconds\n")
+print(f"\n\nImage printing took {t2} seconds\n")
 
 # add a different pixel at the end of the image to indicate the end of the bit string
 image_data.append((169, 0, 0))
