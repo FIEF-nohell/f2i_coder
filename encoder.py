@@ -29,7 +29,7 @@ image_data = []
 counter = 1
 total = root*root
 t1 = time.time()
-print("\n\nPrinting " + str(root) + "x" + str(root) + " grid | " + str(total)+ " pixels total\n")
+print("\n\n---- Printing " + str(root) + "x" + str(root) + " grid | " + str(total)+ " pixels total ----\n")
 for i in range(len(bitstring)):
     if i % root == 0: 
         print(" printing " + str(((counter/(root+1)))*100)[:5] + "% done", end='\r')
@@ -38,7 +38,7 @@ for i in range(len(bitstring)):
         image_data.append((0, 0, 0))  # black pixel
     else:
         image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
-t2 = time.time() - t1
+t2 = round(time.time() - t1,2)
 print(f"Image printing took {t2} seconds\n")
 
 # add a different pixel at the end of the image to indicate the end of the bit string
@@ -50,15 +50,14 @@ for i in range(len(extension_bitstring)):
     else:
         image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
 
-print("Creating image file...")
+print("Creating image file...\n")
 t1 = time.time()
-
 # add a different pixel at the end of the image to indicate the end of the bit string
 image_data.append((169, 00, 00))
-
 image = Image.new("RGB", (width, height))
 image.putdata(image_data)
 image.save(output_folder + "encoded.png")
 #image.show()
-t2 = time.time() - t1
-print(f"Image file created in {t2} seconds")
+t2 = round(time.time() - t1,2)
+print(f"Image file created in {t2} seconds\n")
+print(f"---- Done! ----")
