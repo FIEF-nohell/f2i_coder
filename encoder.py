@@ -12,10 +12,6 @@ output_folder = "./encoded/"
 filename = os.listdir(input_folder)[0]
 filetype = os.path.splitext(filename)[1]
 
- 
-# multiplier for the color brightness
-pixel_color_multiplier = 255
-
 bitstring = bitstring.BitArray(filename=input_folder + filename).bin
 
 # calculate the image dimensions
@@ -37,7 +33,7 @@ for i in tqdm(range(num_iterations), desc="Processing Image"):
     if bitstring[i] == "0":
         image_data.append((0, 0, 0))  # black pixel
     else:
-        image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
+        image_data.append((255, 255, 255))
 
 # add a different pixel at the end of the image to indicate the end of the bit string
 image_data.append((169, 0, 0))
@@ -46,7 +42,7 @@ for i in range(len(extension_bitstring)):
     if extension_bitstring[i] == "0":
         image_data.append((0, 0, 0))  # black pixel
     else:
-        image_data.append((1*pixel_color_multiplier, 1*pixel_color_multiplier, 1*pixel_color_multiplier))  # slightly lighter pixel
+        image_data.append((255, 255, 255))
 
 print("\nCreating image file...")
 t1 = time.time()
@@ -55,7 +51,7 @@ image_data.append((169, 00, 00))
 image = Image.new("RGB", (width, height))
 image.putdata(image_data)
 image.save(output_folder + "encoded.png")
-#image.show()
 t2 = round(time.time() - t1,2)
+
 print(f"Image file created in {t2} seconds\n")
 print(f"---- Done! ----\n")
