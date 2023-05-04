@@ -1,8 +1,9 @@
-from PIL import Image
+# imports
 import bitstring as bs
-import binascii
+from PIL import Image
+from tqdm import tqdm
+import numpy as np
 import time
-import math
 import os
 
 # get the file information 
@@ -16,32 +17,40 @@ pix = image.load()
 image_dimensions = image.size[0]
 colorset = [255, 169, 0]
 print("\n\n---- Image dimensions: " + str(image_dimensions) + "x" + str(image_dimensions) + " ----")  # Get the width and hight of the image for iterating over
-print("\nReading file...\n")
 
 # iterate over each pixel and read its binary data
 separator_counter = 0
 binary_data = bytearray()
 binary_data_ext = bs.BitArray().bin
-t1 = time.time()
-bytes_read = 0
 
-for y in range(image_dimensions):
-    for x in range(image_dimensions):
-        if pix[x,y][0] == 169:
-            separator_counter += 1
-            if separator_counter == 2: break
-        if pix[x,y][0] == 0:
-            if separator_counter == 0: binary_data.append(0)
-            elif separator_counter == 1: binary_data_ext += "0"
-        if pix[x,y][0] == 255:
-            if separator_counter == 0: binary_data.append(1)
-            elif separator_counter == 1: binary_data_ext += "1"
-        bytes_read += 1
-        print(f" Reading {((bytes_read / (image_dimensions**2)) * 100):.2f}% done", end='\r')
-    if separator_counter == 2: break
+"""
+with tqdm(total=image_dimensions**2, desc="Reading Pixels") as pbar:
+    for y in range(image_dimensions):
+        for x in range(image_dimensions):
+            if pix[x,y][0] == 169:
+                separator_counter += 1
+                if separator_counter == 2: break
+            if pix[x,y][0] == 0:
+                if separator_counter == 0: binary_data.append(0)
+                elif separator_counter == 1: binary_data_ext += "0"
+            if pix[x,y][0] == 255:
+                if separator_counter == 0: binary_data.append(1)
+                elif separator_counter == 1: binary_data_ext += "1"
+            pbar.update(1)
+        if separator_counter == 2: break 
+"""
 
-t2 = round(time.time() - t1,2)
-print(f"File read in {t2} seconds, converting into bytes...\n")
+# Convert the image to a NumPy array
+pixel_array = np.array(image)
+
+# Reshape the pixel array to a 2D array of shape (num_pixels, 3)
+num_pixels = pixel_array.shape[0] * pixel_array.shape[1]
+pixel_array = pixel_array.reshape(num_pixels, 3)
+
+# Extract the red values into array
+r_values = pixel_array[:, 0]
+
+print(f"Converting into bytes...\n")
 
 t1 = time.time()
 # convert the integer into a byte-like object
