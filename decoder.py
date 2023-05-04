@@ -44,8 +44,8 @@ t1 = time.time()
 # Convert the array to a string representing a file extension
 extension = ''.join([chr(int(''.join(map(str, binary_data_ext[i:i+8])), 2)) for i in range(0, len(binary_data_ext), 8)])
 
-result = bytearray(binary_data)
-print(result)
+result = bytearray(binary_data.tobytes())
+print(result[0:30])
 
 t2 = round(time.time() - t1, 2)
 print(f"Converting binary format took {t2} seconds\n")
@@ -56,4 +56,4 @@ with open(output_folder + "decoded" + extension, "wb") as file:
 t2 = round(time.time() - t1, 2)
 
 print(f"Created output file in {t2} seconds\n")
-print("---- Done! ----")
+print("---- Done! ----\n")
