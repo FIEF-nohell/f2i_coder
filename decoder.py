@@ -21,12 +21,13 @@ if didnt_exist:
     print("\nSome needed folders were not created yet. Please relaunch the script.\n")
     sys.exit()
 filename = os.listdir(input_folder)[0]
+image_size = os.path.getsize(input_folder + filename) / (1024 * 1024)
 
 # load the image and get the pixels
 Image.MAX_IMAGE_PIXELS = None
 image = Image.open(input_folder + filename)
 image_dimensions = image.size[0]
-print("\n\n---- Image dimensions: " + str(image_dimensions) + "x" + str(image_dimensions) + " ----\n")
+print(f"\n\n---- Image dimensions: {image_dimensions}x{image_dimensions} | Size: {image_size:4f} MB ----\n")
 
 # Convert the image to a NumPy array
 pixel_array = np.array(image)

@@ -37,7 +37,7 @@ height = root
 image_data = []
 total = root*root
 
-print("\n---- Printing " + str(root) + "x" + str(root) + " grid | " + str(total)+ " pixels total ----")
+print("\n---- Printing " + str(root) + "x" + str(root) + " grid | " + str(total)+ " pixels total ----\n")
 
 start_time = time.time()  # record the start time
 num_iterations = len(bitstring)
@@ -66,5 +66,8 @@ image.putdata(image_data)
 image.save(output_folder + "encoded.png")
 t2 = round(time.time() - t1,2)
 
-print(f"Image file created in {t2} seconds\n")
+image_size = os.path.getsize(output_folder + "encoded.png") / (1024 * 1024)
+
+print(f"Image file created in {t2} seconds")
+print(f"Output file size: {image_size:.4f} MB\n")
 print(f"---- Done! ----\n")
