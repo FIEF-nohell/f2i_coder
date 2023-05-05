@@ -33,11 +33,11 @@ root = math.ceil(math.sqrt(len(bitstring)+len(extension_bitstring)))
 width = root 
 height = root
 
-# create the image, display it and save it
+# create the image
 image_data = []
 total = root*root
 
-print("\n---- Printing " + str(root) + "x" + str(root) + " grid | " + str(total)+ " pixels total ----\n")
+print(f"\n---- Printing {root}x{root} grid | {total} pixels total ----\n")
 
 start_time = time.time()  # record the start time
 num_iterations = len(bitstring)
