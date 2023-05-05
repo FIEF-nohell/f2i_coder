@@ -2,11 +2,24 @@
 from PIL import Image
 import numpy as np
 import time
+import sys
 import os
 
 # get the file information 
+didnt_exist = False
 input_folder = "./encoded/"
+if not os.path.exists(input_folder):
+    os.makedirs(input_folder)
+    didnt_exist = True
+
 output_folder = "./decoded/"
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+    didnt_exist = True
+
+if didnt_exist: 
+    print("\nSome needed folders were not created yet. Please relaunch the script.\n")
+    sys.exit()
 filename = os.listdir(input_folder)[0]
 
 # load the image and get the pixels

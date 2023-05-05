@@ -4,11 +4,24 @@ from PIL import Image
 import bitstring
 import time
 import math
+import sys
 import os
 
 # get the file information 
+didnt_exist = False
 input_folder = "./input/"
+if not os.path.exists(input_folder):
+    os.makedirs(input_folder)
+    didnt_exist = True
+
 output_folder = "./encoded/"
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+    didnt_exist = True
+
+if didnt_exist: 
+    print("\nSome needed folders were not created yet. Please relaunch the script.\n")    
+    sys.exit()
 filename = os.listdir(input_folder)[0]
 filetype = os.path.splitext(filename)[1]
 
