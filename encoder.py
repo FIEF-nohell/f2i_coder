@@ -2,6 +2,7 @@
 from tqdm import tqdm
 from PIL import Image
 import bitstring
+import threading
 import time
 import math
 import sys
@@ -35,7 +36,7 @@ width = root
 height = root
 
 # create the image
-image_data = []
+image_data = [None] * len(bitstring)
 total = root*root
 
 print(f"\n---- Printing {root}x{root} grid | {total} pixels total | input file size {file_size:.4f} MB ----\n")
@@ -43,11 +44,29 @@ print(f"\n---- Printing {root}x{root} grid | {total} pixels total | input file s
 start_time = time.time()  # record the start time
 num_iterations = len(bitstring)
 
-for i in tqdm(range(num_iterations), desc="Processing Image"):
-    if bitstring[i] == "0":
-        image_data.append((0, 0, 0))  # black pixel
-    else:
-        image_data.append((255, 255, 255))
+# function to process a range of bits
+def process_bits(bitstring, start, end, image_data):
+    for i in range(start, end):
+        if bitstring[i] == "0":
+            image_data[i] = (0, 0, 0)  # black pixel
+        else:
+            image_data[i] = (255, 255, 255)
+
+# create four threads and assign equal work to each
+num_threads = 32
+chunk_size = num_iterations // num_threads
+threads = []
+
+for i in range(num_threads):
+    start = i * chunk_size
+    end = (i+1) * chunk_size if i != num_threads - 1 else num_iterations
+    thread = threading.Thread(target=process_bits, args=(bitstring, start, end, image_data))
+    thread.start()
+    threads.append(thread)
+
+# wait for all threads to finish
+for thread in threads:
+    thread.join()
 
 # add a different pixel at the end of the image to indicate the end of the bit string
 image_data.append((169, 0, 0))
@@ -60,6 +79,7 @@ for i in range(len(extension_bitstring)):
 
 print("\nCreating image file...")
 t1 = time.time()
+
 # add a different pixel at the end of the image to indicate the end of the bit string
 image_data.append((169, 00, 00))
 image = Image.new("RGB", (width, height))
