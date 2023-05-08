@@ -24,6 +24,7 @@ if didnt_exist:
     sys.exit()
 filename = os.listdir(input_folder)[0]
 filetype = os.path.splitext(filename)[1]
+file_size = os.path.getsize(input_folder+filename) / (1024 * 1024)
 
 bitstring = bitstring.BitArray(filename=input_folder + filename).bin
 
@@ -37,7 +38,7 @@ height = root
 image_data = []
 total = root*root
 
-print(f"\n---- Printing {root}x{root} grid | {total} pixels total ----\n")
+print(f"\n---- Printing {root}x{root} grid | {total} pixels total | input file size {file_size:.4f} MB ----\n")
 
 start_time = time.time()  # record the start time
 num_iterations = len(bitstring)
@@ -67,7 +68,6 @@ image.save(output_folder + "encoded.png")
 t2 = round(time.time() - t1,2)
 
 image_size = os.path.getsize(output_folder + "encoded.png") / (1024 * 1024)
+ratio = image_size / file_size * 100
 
-print(f"Image file created in {t2} seconds")
-print(f"Output file size: {image_size:.4f} MB\n")
-print(f"---- Done! ----\n")
+print(f"---- Image created in {t2} seconds | Output file size {image_size:.4f} MB (+{ratio:.2f}%) ----\n")
