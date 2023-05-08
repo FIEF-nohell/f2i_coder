@@ -1,5 +1,4 @@
 # imports
-from tqdm import tqdm
 from PIL import Image
 import bitstring
 import threading
@@ -45,12 +44,13 @@ start_time = time.time()  # record the start time
 num_iterations = len(bitstring)
 
 # function to process a range of bits
-def process_bits(bitstring, start, end, image_data):
+def process_bits(bitstring, start, end, image_data, thread_index):
     for i in range(start, end):
         if bitstring[i] == "0":
             image_data[i] = (0, 0, 0)  # black pixel
         else:
             image_data[i] = (255, 255, 255)
+    print(f"Thread {thread_index} finished processing bits {start} to {end-1}")
 
 # create four threads and assign equal work to each
 num_threads = 32
@@ -60,7 +60,7 @@ threads = []
 for i in range(num_threads):
     start = i * chunk_size
     end = (i+1) * chunk_size if i != num_threads - 1 else num_iterations
-    thread = threading.Thread(target=process_bits, args=(bitstring, start, end, image_data))
+    thread = threading.Thread(target=process_bits, args=(bitstring, start, end, image_data, i))
     thread.start()
     threads.append(thread)
 
