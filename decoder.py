@@ -20,7 +20,11 @@ if not os.path.exists(output_folder):
 if didnt_exist: 
     print("\nSome needed folders were not created yet. Please relaunch the script.\n")
     sys.exit()
-filename = os.listdir(input_folder)[0]
+try:
+    filename = os.listdir(input_folder)[0]
+except:
+    print(f"\nNo input file found. Please relaunch the script with a valid encoded file in the {input_folder} folder.\n")
+    sys.exit()
 image_size = os.path.getsize(input_folder + filename) / (1024 * 1024)
 
 # load the image and get the pixels
