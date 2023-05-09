@@ -57,7 +57,7 @@ extension = ''.join([chr(int(''.join(map(str, binary_data_ext[i:i+8])), 2)) for 
 result = bytes(np.packbits(binary_data))
 
 t1 = time.time()
-with open(output_folder + "decoded" + extension, "wb") as file:
+with open(output_folder + extension, "wb") as file:
     file.write(result) 
 t2 = round(time.time() - t1, 2)
 
