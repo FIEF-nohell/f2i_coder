@@ -5,6 +5,8 @@ import time
 import sys
 import os
 
+print(f"\n\n##### IMAGE TO FILE CONVERTER by nohell #####\n")
+
 # get the file information 
 didnt_exist = False
 input_folder = "./encoded/"
@@ -31,8 +33,9 @@ image_size = os.path.getsize(input_folder + filename) / (1024 * 1024)
 Image.MAX_IMAGE_PIXELS = None
 image = Image.open(input_folder + filename)
 image_dimensions = image.size[0]
-print(f"\n\n---- Image dimensions: {image_dimensions}x{image_dimensions} | Size: {image_size:4f} MB ----\n")
+print(f"\n---- Image dimensions: {image_dimensions}x{image_dimensions} | Size: {image_size:.4f} MB | Estimated output size: {image_size / 2.2:.2f} MB ----\n")
 
+print(f"Reading file content.")
 # Convert the image to a NumPy array
 pixel_array = np.array(image)
 
@@ -53,16 +56,17 @@ binary_data_ext[binary_data_ext == 255] = 1
 index2 = np.where(binary_data_ext == 169)[0][0]
 binary_data_ext = binary_data_ext[:index2]
 
-print(f"Converting into bytes...\n")
+print(f"Converting into bytes.")
 
 # Convert the array to a string representing a file extension
 extension = ''.join([chr(int(''.join(map(str, binary_data_ext[i:i+8])), 2)) for i in range(0, len(binary_data_ext), 8)])
 
 result = bytes(np.packbits(binary_data))
 
+print(f"Creating file '{extension}'.\n")
 t1 = time.time()
 with open(output_folder + extension, "wb") as file:
     file.write(result) 
 t2 = round(time.time() - t1, 2)
 
-print(f"---- Created output file in {t2:2f} seconds ----\n")
+print(f"---- Created output file in {t2:.2f} seconds ----\n")

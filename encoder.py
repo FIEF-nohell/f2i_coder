@@ -7,6 +7,8 @@ import math
 import sys
 import os
 
+print(f"\n\n##### FILE TO IMAGE CONVERTER by nohell #####\n")
+
 # get the file information 
 didnt_exist = False
 input_folder = "./input/"
@@ -22,6 +24,7 @@ if not os.path.exists(output_folder):
 if didnt_exist: 
     print("\nSome needed folders were not created yet. Please relaunch the script.\n")    
     sys.exit()
+print(f"\nLoading file to memory. Depending on the file size this can take a while.\n")
 try:
     filename = os.listdir(input_folder)[0]
 except:
@@ -37,10 +40,9 @@ extension_bitstring = ''.join(format(ord(c), '08b') for c in filename)
 root = math.ceil(math.sqrt(len(bitstring)+len(extension_bitstring)))
 width, height = root, root
 image_data = [None] * len(bitstring)
-total = height*width
+total_pixels = height*width
 
-print(f"\n---- Printing {root}x{root} grid | {total} pixels total | Input size: {file_size:.2f} MB | Estimated output size: {file_size * 2.2:.2f} MB ----\n")
-
+print(f"\n---- Calculating {root}x{root} image with {total_pixels} pixels | Input size: {file_size:.2f} MB | Estimated output size: {file_size * 2.2:.2f} MB ----\n")
 # record the start time
 start_time = time.time() 
 num_iterations = len(bitstring)
@@ -53,12 +55,14 @@ def process_bits(bitstring, start, end, image_data, thread_index):
         else:
             image_data[i] = (255, 255, 255)
     end_time = time.time() - start_time
-    print(f"Thread {thread_index} finished, {end_time:2f} sec", end="\r")
+    print(f"Thread finished. {end_time:.2f} seconds elapsed. (Thread ID: {thread_index})", end="\r")
 
 # create four threads and assign equal work to each
 num_threads = 32
 chunk_size = num_iterations // num_threads
 threads = []
+
+print(f"Launching {num_threads} threads.")
 
 for i in range(num_threads):
     start = i * chunk_size
@@ -86,10 +90,10 @@ image_data.append((169, 00, 00))
 t1 = time.time()
 
 image = Image.new("RGB", (width, height))
-print("\nWriting data to image...")
+print("\nWriting data to image.")
 image.putdata(image_data)
 
-print("Saving image...")
+print("Saving image.")
 image_format = "png"
 output_filename = output_folder + "encoded." + image_format.lower()
 image.save(output_filename, format=image_format)
