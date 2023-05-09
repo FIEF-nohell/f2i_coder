@@ -1,6 +1,3 @@
-*.rar
-*.png
-*.txt
-*.exe
-*.accdb
-*.html
+/encoded
+/decoded
+/input
