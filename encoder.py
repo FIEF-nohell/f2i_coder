@@ -35,7 +35,7 @@ width, height = root, root
 image_data = [None] * len(bitstring)
 total = height*width
 
-print(f"\n---- Printing {root}x{root} grid | {total} pixels total | input file size {file_size:.4f} MB ----\n")
+print(f"\n---- Printing {root}x{root} grid | {total} pixels total | Input size: {file_size:.2f} MB | Estimated output size: {file_size * 2.2:.2f} MB ----\n")
 
 # record the start time
 start_time = time.time() 
@@ -95,4 +95,4 @@ t2 = round(time.time() - t1, 2)
 image_size = os.path.getsize(output_filename) / (1024 * 1024)
 ratio = image_size / file_size * 100
 
-print(f"\n---- Image created in {t2} seconds | Output file size {image_size:.4f} MB (+{ratio:.2f}%) ----\n")
+print(f"\n---- Image created in {t2} seconds | Output file size: {image_size:.4f} MB (+{ratio:.2f}%) ----\n")
