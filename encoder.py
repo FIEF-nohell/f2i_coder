@@ -37,7 +37,8 @@ for file in files:
     filetype = os.path.splitext(file)[1]
     file_size = os.path.getsize(input_folder+file) / (1024 * 1024)
 
-    print(f"file: {file}")
+    print(f"\n\nfile: {file}")
+    print(f"size: {file_size:.2f} MB")
 
     bitstring_from_file = bitstring.BitArray()
     bitstring_from_file = bitstring.BitArray(filename=(input_folder + file)).bin
@@ -103,8 +104,8 @@ for file in files:
     print("Saving image.")
     image_format = "png"
     chars = string.ascii_letters + string.digits
-    random_string = ''.join(random.choices(chars, k=6))
-    output_filename = output_folder + random_string + "encoded." + image_format.lower()
+    random_string = ''.join(random.choices(chars, k=8))
+    output_filename = output_folder + random_string + "." + image_format.lower()
     image.save(output_filename, format=image_format)
 
     t2 = round(time.time() - t1, 2)
