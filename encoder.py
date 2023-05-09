@@ -31,12 +31,9 @@ bitstring = bitstring.BitArray(filename=input_folder + filename).bin
 # calculate the image dimensions
 extension_bitstring = ''.join(format(ord(c), '08b') for c in filename)
 root = math.ceil(math.sqrt(len(bitstring)+len(extension_bitstring)))
-width = root 
-height = root
-
-# create the image
+width, height = root 
 image_data = [None] * len(bitstring)
-total = root*root
+total = height*width
 
 print(f"\n---- Printing {root}x{root} grid | {total} pixels total | input file size {file_size:.4f} MB ----\n")
 
