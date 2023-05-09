@@ -61,5 +61,4 @@ with open(output_folder + extension, "wb") as file:
     file.write(result) 
 t2 = round(time.time() - t1, 2)
 
-print(f"Created output file in {t2} seconds\n")
-print("---- Done! ----\n")
+print(f"---- Created output file in {t2:2f} seconds ----\n")
