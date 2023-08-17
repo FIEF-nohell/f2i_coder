@@ -5,7 +5,7 @@ A better description would be encrypter. Any file placed in the input folder wil
 
 Converted files increase up to 250% in size!
 
-The image to file (i2f) converter is significantly faster and works pretty well.
+The image to file (i2f) converter is significantly faster and works pretty well at this point.
 
 
 ## Dependencies
